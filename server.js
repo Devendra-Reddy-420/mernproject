@@ -7,6 +7,7 @@ const bcrypt = require("bcrypt");
 const router = require("./routes");
 const session = require("express-session");
 const mongodbSession = require("connect-mongodb-session")(session);
+require('dotenv').config();  // Add this line to load environment variables
 
 // Setup
 const app = express();
@@ -19,7 +20,7 @@ var methodOverride = require('method-override');
 app.use(methodOverride('_method'));
 
 // MongoDB connection
-const mongoURI = "mongodb://mongoadmin:secret@mongo:27017/test?authSource=admin&retryWrites=true&w=majority";
+const mongoURI = `mongodb://${process.env.USERNAME}:${process.env.PASSWORD}@${process.env.HOST}:${process.env.PORT}/${process.env.DATABASE}?authSource=admin&retryWrites=true&w=majority`;
 mongoose
   .connect(mongoURI)
   .then(() => {
